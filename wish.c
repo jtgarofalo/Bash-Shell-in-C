@@ -106,6 +106,7 @@ int main(int argc, char *argv[]) {
     //DYNAMICALLY ALLOCATE ARRAYS
     char *sepCmd[numTokens + 1];                      //char array to hold parsed commands
     char *redCmd[carrotInd + 1];                      //char array in case of redirection
+	  
     //navigate inside double array and allocate individual cells
     for(int i = 0; i < numTokens + 1; i++){
       sepCmd[i] = malloc(bufsize * sizeof(char)); //not sure if bufsize * char is needed
@@ -161,9 +162,7 @@ int main(int argc, char *argv[]) {
         parseCmd = strtok(NULL, delims);
       }
     }
-    //printf("sepCmd[0]=%s\n", sepCmd[0]);
-    //printf("sepCmd[1]=%s\n", sepCmd[1]);
-    //printf("sepCmd[2]=%s\n", sepCmd[2]);
+	  
     //exit condition from wish
     if(strcmp(sepCmd[0], "exit") == 0){
       if(numTokens == 1){
@@ -178,7 +177,6 @@ int main(int argc, char *argv[]) {
     //built in command cd
     else if(strcmp(sepCmd[0], "cd") == 0){
       //check if cd was called with more than one arg, or less than one arg
-      
       if(numTokens != 2){
        	write(STDERR_FILENO, error_message, strlen(error_message));       //throw error because 0 or >1 args provided to cd
 	continue;
@@ -215,9 +213,7 @@ int main(int argc, char *argv[]) {
     //WE BEGIN THE FORK JOIN!!!!!
     int retval = fork();
     char *sysCmd;
-    //char *tempCmd;
     sysCmd = (char *)malloc(bufsize * sizeof(char));
-    //tempCmd = (char *)malloc(bufsize * sizeof(char)); //tempCmd = "/bin/ls"      //sepCmd[0] = ls 
     //child process
     if(retval == 0){
       for(int i = 0; i < 20; i++){
@@ -269,7 +265,6 @@ int main(int argc, char *argv[]) {
 	      continue;     //skip to next iteration of path
 	    }
 	    else if(access(sysCmd, X_OK) == 0){
-	      //printf("before exec\n");
 	      if(execv(sysCmd, redCmd) < 0){
 		//should never reach here, only reach here if execv fails
 		write(STDERR_FILENO, error_message, strlen(error_message));
