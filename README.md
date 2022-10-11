@@ -1,6 +1,8 @@
 # Bash-Shell-in-C
 This is a shell that I coded in C that can perform many basic functions a bash shell would be able to perform.
 
+This shell is designed to be run on Linux x86 Architecture, if run on a different machine, you may experience runtime errors due to the portion of code where I redirect the output of STDOUT to a file. 
+
 Capabilities Include:
 - Ability to reroute output to a file instead of to terminal
 - Ability to accept commands directly from user: "./wish" 
